@@ -47,29 +47,53 @@ What's the time complexity?
  */
 
 function Stack (capacity) {
-  this.storage = '';
+  this.capacity = capacity || 2;
+  this.storage = {};
+  this._counter = 0;
 }
 
 Stack.prototype.push = function (value) {
-  var divider = '-';
-  this.storage += divider + value;
+  if (Object.keys(this.storage).length <= this.capacity) {
+    this.storage[this._counter++] = value;
+  } else {
+    console.log('Max capacity already reached. Remove element before adding a new one.');
+  }
 };
 // Time complexity:
 
 Stack.prototype.pop = function () {
-  // implement me...
+  var stackLength = Object.keys(this.storage).length - 1;
+  delete this.storage[stackLength];
 };
 // Time complexity:
 
 Stack.prototype.peek = function () {
-  // implement me...
+  var stackLength = Object.keys(this.storage).length - 1;
+  var itemAdded = this.storage[stackLength];
+  console.log('ITEM-ADDED=====>', itemAdded);
 };
 // Time complexity:
 
 Stack.prototype.count = function () {
-  // implement me...
+  var stackCount = Object.keys(this.storage).length;
+  console.log('STACK COUNT====>', stackCount);
 };
 // Time complexity:
+
+Stack.prototype.logger = function () {
+  console.log('STACK-STORAGE====>', this.storage);
+};
+
+// This inits myStack Factory
+var myStack = new Stack();
+myStack.push('Hello');
+myStack.push('World');
+myStack.push('!');
+myStack.push('!');
+myStack.pop();
+myStack.peek();
+myStack.logger();
+myStack.count();
 
 /*
 *** Exercises:
